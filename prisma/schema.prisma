@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:dNTybVFlJzRmfcGuqjrHBfFCjMVBXgSP@interchange.proxy.rlwy.net:38060/railway"
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  password  String
+  token     String?    @unique @db.VarChar(512)
+  role      Role       @default(VIEWER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  following Follow[]   @relation("UserFollows")
+  followers Follow[]   @relation("UserFollowedBy")
+  posts     Post[]
+  reactions Reaction[]
+}
+
+model Post {
+  id        Int        @id @default(autoincrement())
+  caption   String
+  imageUrl  String?
+  userId    Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id])
+  reactions Reaction[]
+
+  @@index([userId], map: "Post_userId_fkey")
+}
+
+model Reaction {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post     @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, postId])
+  @@index([postId], map: "Reaction_postId_fkey")
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  follower    User     @relation("UserFollows", fields: [followerId], references: [id])
+  following   User     @relation("UserFollowedBy", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+  @@index([followingId], map: "Follow_followingId_fkey")
+}
+
+enum Role {
+  ADMIN
+  VIEWER
+  EDITOR
+}
