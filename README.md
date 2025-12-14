@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🐦 Tweeter Backend
 
-## Getting Started
+مشروع **Tweeter Backend** هو تطبيق Backend (API) مبني باستخدام **Next.js** و **Prisma ORM**،
+ويتصل بقاعدة بيانات **MySQL** مستضافة على **Railway**، مع نشر التطبيق على **Vercel**.
 
-First, run the development server:
+المشروع يوفّر وظائف أساسية مثل تسجيل المستخدمين (Register) والتعامل مع قاعدة البيانات بطريقة آمنة وحديثة.
+
+---
+
+## 🚀 طريقة التشغيل محليًا
+
+### 1️⃣ استنساخ المشروع
+
+```bash
+git clone https://github.com/naya2matter/tweeter-backend.git
+cd tweeter-backend
+```
+
+---
+
+### 2️⃣ تثبيت الحزم
+
+```bash
+npm install
+```
+
+---
+
+### 3️⃣ إعداد متغيرات البيئة
+
+أنشئ ملف باسم `.env` في جذر المشروع، ثم أضف:
+
+
+```env
+DATABASE_URL="mysql://root:YOUR_PASSWORD@interchange.proxy.rlwy.net:38060/railway"
+```
+> ⚠️ لا تقم برفع ملف `.env` إلى GitHub.
+
+
+---
+
+### 4️⃣ إعداد Prisma
+
+
+```bash
+npx prisma migrate deploy
+```
+
+أو أثناء التطوير:
+
+```bash
+npx prisma db push
+```
+
+---
+
+### 5️⃣ تشغيل المشروع محليًا
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+سيتوفر السيرفر على:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧪 اختبار الـ API
 
-To learn more about Next.js, take a look at the following resources:
+يمكنك استخدام **Postman** لاختبار الـ endpoints مثل:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+POST http://localhost:3000/api/register
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🖥️ Prisma Studio
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+لعرض البيانات مباشرة من قاعدة البيانات:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx prisma studio
+```
+
+سيتم فتح الواجهة على:
+
+```
+http://localhost:5555
+```
+
+---
+
+## 🌐 النشر على Vercel
+
+1. اربط المشروع مع GitHub.
+2. أثناء الإعداد على Vercel، أضف متغير البيئة التالي:
+
+```
+Name: DATABASE_URL
+Value: mysql://root:YOUR_PASSWORD@interchange.proxy.rlwy.net:38060/railway
+```
+
+3. اضغط **Deploy**.
+
+بعد النشر، ستحصلين على رابط مثل:
+
+```
+https://tweeter-backend.vercel.app
+```
+
+---
+
+## 🧩 التقنيات المستخدمة
+
+* **Next.js** (API Routes)
+* **Prisma ORM**
+* **MySQL** (Railway)
+* **Vercel**
+* **Postman** (للاختبار)
+
+---
+
+## 👩‍💻 المطوّرة
+
+* الاسم: (NAYA MATTER)
+* GitHub: [tweeter-backend](https://github.com/naya2matter/tweeter-backend)
+* Vercel: https://tweeter-backend-sandy.vercel.app/
+
+
+---
+
+✨ هذا المشروع جزء من التعلّم العملي على بناء Backends حديثة باستخدام Prisma و Cloud Databases.
